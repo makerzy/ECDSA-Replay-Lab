@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT 
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.19;
 
 interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
@@ -28,8 +28,8 @@ contract VulnerableERC20 is IERC20 {
     string public constant symbol = 'VulToken';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
-    mapping(address => uint) public balanceOf;
-    mapping(address => mapping(address => uint)) public allowance;
+    mapping(address account => uint balance) public balanceOf;
+    mapping(address owner => mapping(address spender => uint allowed)) public allowance;
 
     bytes32 public DOMAIN_SEPARATOR;
     // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
