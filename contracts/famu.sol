@@ -135,7 +135,7 @@ contract FAMUERC20 is IERC20 {
         bytes32 r,
         bytes32 s
     ) external {
-        require(deadline >= block.timestamp, "UniswapV2: EXPIRED");
+        require(deadline >= block.timestamp, "FamuERC20: EXPIRED");
         bytes32 digest = keccak256(
             abi.encodePacked(
                 "\x19\x01",
@@ -155,7 +155,7 @@ contract FAMUERC20 is IERC20 {
         address recoveredAddress = ecrecover(digest, v, r, s);
         require(
             recoveredAddress != address(0) && recoveredAddress == owner,
-            "UniswapV2: INVALID_SIGNATURE"
+            "FamuERC20: INVALID_SIGNATURE"
         );
         _approve(owner, spender, value);
     }
