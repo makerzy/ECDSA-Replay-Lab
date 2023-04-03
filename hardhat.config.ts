@@ -1,18 +1,13 @@
-import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import dotenv from "dotenv";
-import "hardhat-contract-sizer";
-import "hardhat-gas-reporter";
 import { task } from "hardhat/config";
-require("solidity-coverage");
 dotenv.config();
 
-const { ETHERSCAN_API_KEY, MAIN_WALLET, GOERLI_TEST_RPC_URL, AVALANCHE_FUJI_C_RPC_URL } = process.env;
+const { ETHERSCAN_API_KEY, WALLETS, GOERLI_TEST_RPC_URL, AVALANCHE_FUJI_C_RPC_URL } = process.env;
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (args, hre) => {
   const accounts = await hre.ethers.getSigners();
-
   for (const account of accounts) {
     console.log(account.address);
   }
@@ -67,14 +62,24 @@ const config = {
     testnet: {
       url: AVALANCHE_FUJI_C_RPC_URL,
       chainId: 43113,
-      // gasPrice: 20000000000,
-      accounts: [MAIN_WALLET],
+      accounts: {
+        mnemonic: WALLETS,
+        path: "m/44'/60'/0'/0",
+        initialIndex: 0,
+        count: 4,
+        passphrase: "",
+      },
     },
     goerli: {
       url: GOERLI_TEST_RPC_URL,
       chainId: 5,
-      // gasPrice: 20000000000,
-      accounts: [MAIN_WALLET],
+      accounts: {
+        mnemonic: WALLETS,
+        path: "m/44'/60'/0'/0",
+        initialIndex: 0,
+        count: 4,
+        passphrase: "",
+      },
     },
   },
 
