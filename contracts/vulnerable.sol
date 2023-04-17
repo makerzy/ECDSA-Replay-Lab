@@ -113,7 +113,6 @@ contract VulnerableERC20 is IERC20 {
                         owner,
                         spender,
                         value,
-                        ++nonces[owner],
                         deadline
                     )
                 )

@@ -64,10 +64,9 @@ describe("FAMUToken", function () {
 
 
     it("Should fail if signature is replayed", async function () {
-
       const { deadline, value, spender, v, r, s } = await makeSig(owner, other0, BigNumber(5000).multipliedBy(1e18).toString(10), 1, getTime(6000))
       await famu.connect(other1).permit(owner.address, spender, value, deadline, v, r, s)
-      await expect(famu.connect(other1).permit(owner.address, spender, value, deadline, v, r, s)).to.revertedWith("UniswapV2: INVALID_SIGNATURE")
+      await expect(famu.connect(other1).permit(owner.address, spender, value, deadline, v, r, s)).to.revertedWith('FamuERC20: INVALID_SIGNATURE')
       expect(await famu.allowance(owner.address, spender)).to.equal(BigNumber(value).toString(10))
       await expect(famu.connect(other0).transferFrom(owner.address, spender, value)).to.emit(famu, "Transfer")
       expect(await famu.allowance(owner.address, spender)).to.equal(0)
